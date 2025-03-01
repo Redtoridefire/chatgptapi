@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function sendMessage() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let userMessage = document.getElementById("userInput").value;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let apiKey = document.getElementById("apiKey").value;<span class="Apple-converted-space">  </span>// Optional, if you want extra auth</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!apiKey) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert("Please enter your API key.");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("chatbox").innerHTML += `&lt;p&gt;&lt;strong&gt;You:&lt;/strong&gt; ${userMessage}&lt;/p&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let response = await fetch("https://xyz123.execute-api.us-east-1.amazonaws.com", {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>method: "POST",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>headers: { "Content-Type": "application/json" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>body: JSON.stringify({ message: userMessage })</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let data = await response.json();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (data.error) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById("chatbox").innerHTML += `&lt;p&gt;&lt;strong&gt;Error:&lt;/strong&gt; ${data.error}&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById("chatbox").innerHTML += `&lt;p&gt;&lt;strong&gt;GPT:&lt;/strong&gt; ${data.response}&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("userInput").value = "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">&lt;/script&gt;</p>
+</body>
+</html>
